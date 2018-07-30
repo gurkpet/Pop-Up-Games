@@ -30,7 +30,11 @@ class FieldCalendar extends React.Component {
         <div>
           {
             this.state.data.events.sort((a, b) => {
-                return moment(a.date).diff(moment(b.date))
+                if(moment(a.date).diff(moment(b.date)) < 0) return -1
+                if(moment(a.date).diff(moment(b.date)) > 0) return 1
+                if(a.startBlock < b.startBlock) return 1
+                else return -1
+
               }).map((event, index) => {
                 return <EventEntry data={event} key={index} changeTarget={this.changeTarget} />
             })
