@@ -2,6 +2,7 @@ import React from 'react';
 import EventEntry from './EventEntry.jsx';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 /**
  * @description The calendar data for the field in question
@@ -28,8 +29,10 @@ class FieldCalendar extends React.Component {
         </div>
         <div>
           {
-            this.state.data.events.map((event, index) => {
-              return <EventEntry data={event} key={index} changeTarget={this.changeTarget} />
+            this.state.data.events.sort((a, b) => {
+                return moment(a.date).diff(moment(b.date))
+              }).map((event, index) => {
+                return <EventEntry data={event} key={index} changeTarget={this.changeTarget} />
             })
           }
         </div>
